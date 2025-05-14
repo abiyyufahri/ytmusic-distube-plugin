@@ -1,0 +1,51 @@
+{
+  "name": "ytmusic-distube-plugin",
+  "version": "1.0.0",
+  "description": "Unofficial YouTube Music plugin for DisTube",
+  "main": "src/index.js",
+  "module": "src/index.mjs",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "test": "node test/test.js",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
+    "src",
+    "types",
+    "scripts",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=16.9.0"
+  },
+  "keywords": [
+    "distube",
+    "plugin",
+    "discord",
+    "youtube",
+    "youtube-music",
+    "ytmusic",
+    "music",
+    "discord-music",
+    "discord-bot",
+    "unofficial"
+  ],
+  "author": "abiyyufahri",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abiyyufahri/ytmusic-distube-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abiyyufahri/ytmusic-distube-plugin/issues"
+  },
+  "homepage": "https://github.com/abiyyufahri/ytmusic-distube-plugin#readme",
+  "dependencies": {
+    "@distube/ytdl-core": "latest",
+    "ytmusic-api": "latest"
+  },
+  "peerDependencies": {
+    "distube": "^4.0.0"
+  }
+}
