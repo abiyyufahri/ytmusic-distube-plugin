@@ -95,7 +95,7 @@ This is an **unofficial** plugin for DisTube. It is not endorsed by or affiliate
 ## Acknowledgements
 
 This plugin makes use of the following libraries:
-- [ytmusic-api](https://github.com/valeriansaliou/ytmusic-api) - API client for YouTube Music
+- [ytmusic-api](https://github.com/zS1L3NT/ts-npm-ytmusic-api) - API client for YouTube Music
 - [@distube/ytdl-core](https://github.com/distubejs/ytdl-core) - YouTube video and audio stream downloader
 - [DisTube](https://distube.js.org/) - A Discord.js module to simplify your music commands
 

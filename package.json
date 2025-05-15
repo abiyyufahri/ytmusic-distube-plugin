@@ -1,6 +1,6 @@
 {
   "name": "ytmusic-distube-plugin",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Unofficial YouTube Music plugin for DisTube",
   "main": "src/index.js",
   "module": "src/index.mjs",
@@ -46,6 +46,6 @@
     "ytmusic-api": "latest"
   },
   "peerDependencies": {
-    "distube": "^4.0.0"
+    "distube": "latest"
   }
 }
