@@ -58,6 +58,74 @@ async function testPlugin() {
     } else {
       console.log("❌ Search failed")
     }
+
+    // Test searchSongs with default parameters (type: song, limit: 3)
+    console.log("\n--- Testing searchSongs with default parameters ---")
+    try {
+      const multiSearchQuery = "Tulus"
+      console.log(`Searching for songs with query: "${multiSearchQuery}"`)
+      const songs = await plugin.searchSongs(multiSearchQuery)
+      
+      if (songs && songs.length > 0) {
+        console.log(`✅ Successfully found ${songs.length} songs`)
+        console.log("\nSong results:")
+        songs.forEach((song, index) => {
+          console.log(`${index + 1}. ${song.name} by ${song.uploader.name} (${song.duration} seconds)`)
+        })
+      } else {
+        console.log("❌ No songs found")
+      }
+    } catch (e) {
+      console.log("❌ Multi song search failed:", e.message)
+    }
+
+    // Test searchSongs dengan parameter khusus hanya untuk lagu
+    console.log("\n--- Testing searchSongs with custom limit ---")
+    try {
+      const customSearchQuery = "Dewa 19"
+      console.log(`Searching for songs with query: "${customSearchQuery}" with limit 5`)
+      const customSongs = await plugin.searchSongs(customSearchQuery, { limit: 5 })
+      
+      if (customSongs && customSongs.length > 0) {
+        console.log(`✅ Successfully found ${customSongs.length} songs`)
+        console.log("\nCustom limit song results:")
+        customSongs.forEach((song, index) => {
+          console.log(`${index + 1}. ${song.name} by ${song.uploader.name}`)
+        })
+      } else {
+        console.log("❌ No songs found with custom limit")
+      }
+    } catch (e) {
+      console.log("❌ Custom song search failed:", e.message)
+    }
+
+    // Test mengambil video dengan keyword spesifik
+    console.log("\n--- Testing searchSongs with specific keyword ---")
+    try {
+      const specificQuery = "Peterpan - Semua Tentang Kita"
+      console.log(`Searching for specific song: "${specificQuery}"`)
+      const specificSongs = await plugin.searchSongs(specificQuery, { limit: 1 })
+      
+      if (specificSongs && specificSongs.length > 0) {
+        console.log(`✅ Successfully found specific song`)
+        console.log(`Title: ${specificSongs[0].name}`)
+        console.log(`URL: ${specificSongs[0].url}`)
+        console.log(`Duration: ${specificSongs[0].duration} seconds`)
+        
+        // Test mendapatkan stream URL dari hasil pencarian spesifik
+        try {
+          const specificStreamUrl = await plugin.getStreamURL(specificSongs[0])
+          console.log("✅ Got stream URL for specific song")
+        } catch (e) {
+          console.log("❌ Failed to get stream URL for specific song:", e.message)
+        }
+      } else {
+        console.log("❌ Specific song not found")
+      }
+    } catch (e) {
+      console.log("❌ Specific song search failed:", e.message)
+    }
+    
   } catch (error) {
     console.error("❌ Test failed:", error)
   }

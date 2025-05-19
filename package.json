@@ -1,6 +1,6 @@
 {
   "name": "ytmusic-distube-plugin",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Unofficial YouTube Music plugin for DisTube",
   "main": "src/index.js",
   "module": "src/index.mjs",
@@ -43,9 +43,9 @@
   "homepage": "https://github.com/abiyyufahri/ytmusic-distube-plugin#readme",
   "dependencies": {
     "@distube/ytdl-core": "latest",
-    "ytmusic-api": "latest"
+    "ytmusic-api": "^5.3.0"
   },
   "peerDependencies": {
-    "distube": "latest"
+    "distube": "^5.0.7"
   }
 }

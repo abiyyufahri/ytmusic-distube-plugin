@@ -23,6 +23,27 @@ declare interface YouTubeMusicPluginOptions {
   maxViews?: number
 }
 
+declare interface SearchSongsOptions {
+  /**
+   * Type of search result
+   * @default 'song'
+   */
+  type?: 'song' | 'album' | 'playlist' | 'artist'
+  /**
+   * Maximum number of results to return
+   * @default 3
+   */
+  limit?: number
+  /**
+   * Discord guild member who performed the search
+   */
+  member?: any
+  /**
+   * Additional metadata to associate with the songs
+   */
+  metadata?: any
+}
+
 declare class YouTubeMusicPlugin extends ExtractorPlugin {
   constructor(options?: YouTubeMusicPluginOptions)
 
@@ -71,6 +92,13 @@ declare class YouTubeMusicPlugin extends ExtractorPlugin {
    * @param options Optional options
    */
   searchSong(query: string, options?: any): Promise<Song | null>
+
+  /**
+   * Search for multiple Songs from YouTube Music
+   * @param query Search query
+   * @param options Optional search options
+   */
+  searchSongs(query: string, options?: SearchSongsOptions): Promise<Song[]>
 
   /**
    * Get the stream URL from Song's URL

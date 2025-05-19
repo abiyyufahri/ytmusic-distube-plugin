@@ -359,6 +359,89 @@ class YouTubeMusicPlugin extends ExtractorPlugin {
   }
 
   /**
+   * Search for multiple Songs from YouTube Music
+   * @param {string} query Search query
+   * @param {Object} options Optional options
+   * @param {string} [options.type='song'] Type of search result ('song', 'album', 'playlist', 'artist')
+   * @param {number} [options.limit=3] Maximum number of results to return
+   * @returns {Promise<Song[]>}
+   */
+  async searchSongs(query, options = {}) {
+    try {
+      const type = options.type || 'song'
+      const limit = options.limit || 3
+      
+      console.log(`Searching for ${type}s with query: "${query}" (limit: ${limit})`)
+      
+      let searchResults = []
+      
+      // Use the appropriate search method based on type
+      switch (type) {
+        case 'song':
+          searchResults = await this.ytmusic.searchSongs(query)
+          break
+        case 'album':
+          searchResults = await this.ytmusic.searchAlbums(query)
+          break
+        case 'playlist':
+          searchResults = await this.ytmusic.searchPlaylists(query)
+          break
+        case 'artist':
+          searchResults = await this.ytmusic.searchArtists(query)
+          break
+        default:
+          searchResults = await this.ytmusic.searchSongs(query)
+      }
+
+      if (!searchResults || searchResults.length === 0) {
+        console.log(`No ${type} search results found`)
+        return []
+      }
+
+      // Limit the number of results
+      const limitedResults = searchResults.slice(0, limit)
+      console.log(`Found ${searchResults.length} results, returning ${limitedResults.length}`)
+      
+      // Process results into Song objects
+      const songs = []
+      
+      for (const result of limitedResults) {
+        // Skip items without videoId
+        if (!result.videoId) {
+          console.log(`Result skipped - no videoId: ${result.name || 'Unknown'}`)
+          continue
+        }
+        
+        // Create a Song object with standard pattern
+        songs.push(new Song({
+          source: "youtube-music",
+          id: result.videoId,
+          name: result.name || result.title || "Unknown Title",
+          url: `https://music.youtube.com/watch?v=${result.videoId}`,
+          thumbnail: result.thumbnails && result.thumbnails.length > 0 
+            ? result.thumbnails[result.thumbnails.length - 1].url 
+            : null,
+          duration: result.duration ? this.convertDurationToSeconds(result.duration) : 0,
+          uploader: {
+            name: result.artists && result.artists.length > 0 
+              ? result.artists.map(artist => artist.name).join(", ") 
+              : "Unknown Artist"
+          },
+          playFromSource: true,
+          plugin: this,
+          member: options.member || null,
+          metadata: options.metadata || null
+        }, options))
+      }
+
+      return songs
+    } catch (e) {
+      console.error("Search songs error:", e)
+      return [] // Return empty array on error
+    }
+  }
+
+  /**
    * Get the stream URL from Song's URL
    * @param {Song} song Input song
    * @returns {Promise<string>}
