@@ -391,7 +391,7 @@ class YouTubeMusicPlugin extends ExtractorPlugin {
           thumbnail: track.thumbnails && track.thumbnails.length > 0 
             ? track.thumbnails[track.thumbnails.length - 1].url 
             : null,
-          duration: track.duration ? this.convertDurationToSeconds(track.duration) : 0,
+          duration: track.duration ? track.duration : 0,
           uploader: {
             name: track.artists && track.artists.length > 0 
               ? track.artists.map(artist => artist.name).join(", ") 
@@ -455,7 +455,7 @@ class YouTubeMusicPlugin extends ExtractorPlugin {
         thumbnail: firstResult.thumbnails && firstResult.thumbnails.length > 0 
           ? firstResult.thumbnails[firstResult.thumbnails.length - 1].url 
           : null,
-        duration: firstResult.duration ? this.convertDurationToSeconds(firstResult.duration) : 0,
+        duration: firstResult.duration ? firstResult.duration : 0,
         uploader: {
           name: firstResult.artists && firstResult.artists.length > 0 
             ? firstResult.artists.map(artist => artist.name).join(", ") 
@@ -535,7 +535,7 @@ class YouTubeMusicPlugin extends ExtractorPlugin {
           thumbnail: result.thumbnails && result.thumbnails.length > 0 
             ? result.thumbnails[result.thumbnails.length - 1].url 
             : null,
-          duration: result.duration ? this.convertDurationToSeconds(result.duration) : 0,
+          duration: result.duration ? result.duration : 0,
           uploader: {
             name: result.artists && result.artists.length > 0 
               ? result.artists.map(artist => artist.name).join(", ") 
@@ -621,7 +621,7 @@ class YouTubeMusicPlugin extends ExtractorPlugin {
           thumbnail: track.thumbnails && track.thumbnails.length > 0 
             ? track.thumbnails[track.thumbnails.length - 1].url 
             : null,
-          duration: track.duration ? this.convertDurationToSeconds(track.duration) : 0,
+          duration: track.duration ? track.duration : 0,
           uploader: {
             name: track.artists && track.artists.length > 0 
               ? track.artists.map(artist => artist.name).join(", ") 
@@ -637,29 +637,6 @@ class YouTubeMusicPlugin extends ExtractorPlugin {
       console.error(`Failed to get related songs for ${song.id}:`, e);
       return []; // Return an empty array if fails
     }
-  }
-
-  /**
-   * Convert duration string (MM:SS) to seconds
-   * @param {string} duration Duration string
-   * @returns {number} Duration in seconds
-   * @private
-   */
-  convertDurationToSeconds(duration) {
-    if (!duration) return 0;
-
-    duration = duration.toString()
-
-    const parts = duration.split(":").map(Number);
-    if (parts.length === 2) {
-      // MM:SS format
-      return parts[0] * 60 + parts[1];
-    } else if (parts.length === 3) {
-      // HH:MM:SS format
-      return parts[0] * 3600 + parts[1] * 60 + parts[2];
-    }
-
-    return 0;
   }
 
   /**
